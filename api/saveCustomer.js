@@ -9,24 +9,34 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Sadece POST istekleri kabul edilir.' });
   }
 
-  const { fullName, phone, message, date, checkin, checkout, adults, children, childAges } = req.body;
+  const {
+    ad_soyad,
+    telefon,
+    otel_adi,
+    mesaj,
+    fiyat,
+    durum = "bekliyor",
+    not = ""
+  } = req.body;
 
-  const { data, error } = await supabase.from('customers').insert([
+  if (!ad_soyad || !telefon || !otel_adi || !mesaj || !fiyat) {
+    return res.status(400).json({ error: "Eksik bilgi var." });
+  }
+
+  const { data, error } = await supabase.from('musteriler').insert([
     {
-      full_name: fullName,
-      phone,
-      message,
-      date,
-      checkin,
-      checkout,
-      adults,
-      children,
-      child_ages: childAges,
-    },
+      ad_soyad,
+      telefon,
+      otel_adi,
+      mesaj,
+      fiyat,
+      durum,
+      not
+    }
   ]);
 
   if (error) {
-    return res.status(500).json({ success: false, error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 
   return res.status(200).json({ success: true, data });
