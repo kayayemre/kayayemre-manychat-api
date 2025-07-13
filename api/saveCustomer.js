@@ -7,22 +7,23 @@ export default async function handler(req, res) {
     const { ad_soyad, telefon, otel_adi, mesaj, fiyat } = req.body;
 
     // Supabase'e veri gönderimi
-    const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/musteriler`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": process.env.SUPABASE_API_KEY,
-        "Authorization": `Bearer ${process.env.SUPABASE_API_KEY}`,
-        "Prefer": "return=representation"
-      },
-      body: JSON.stringify({
-        ad_soyad,
-        telefon,
-        otel_adi,
-        mesaj,      // ✨ burada hiçbir parse, encode, replace yapmıyoruz
-        fiyat
-      })
-    });
+   const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/musteriler`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "apikey": process.env.SUPABASE_API_KEY,
+    "Authorization": `Bearer ${process.env.SUPABASE_API_KEY}`,
+    "Prefer": "return=representation"
+  },
+  body: JSON.stringify({
+    ad_soyad,
+    telefon,
+    otel_adi,
+    mesaj,  // ✨ hiç dokunmadan gönderiyoruz
+    fiyat
+  })
+});
+
 
     const data = await response.json();
 
