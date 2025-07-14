@@ -16,7 +16,9 @@ export default async function handler(req, res) {
     mesaj,
     fiyat,
     durum = "bekliyor",
-    not = ""
+    not = "",
+    bilgi_durumu = "",
+    fiyat_durumu = ""
   } = req.body;
 
   if (!ad_soyad || !telefon || !otel_adi || !mesaj || !fiyat) {
@@ -31,7 +33,9 @@ export default async function handler(req, res) {
       mesaj,
       fiyat,
       durum,
-      not
+      not,
+      bilgi_durumu,
+      fiyat_durumu
     }
   ]);
 
