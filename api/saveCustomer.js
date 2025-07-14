@@ -10,19 +10,18 @@ export default async function handler(req, res) {
   }
 
   const {
-    ad_soyad,
+    ad_soyad = "",
     telefon,
     otel_adi,
-    mesaj,
-    fiyat,
+    mesaj = "",
+    fiyat = "",
     durum = "bekliyor",
     not = "",
-    bilgi_durumu = "",
-    fiyat_durumu = ""
+    updated_by = ""
   } = req.body;
 
-  if (!ad_soyad || !telefon || !otel_adi || !mesaj || !fiyat) {
-    return res.status(400).json({ error: "Eksik bilgi var." });
+  if (!telefon || !otel_adi) {
+    return res.status(400).json({ error: "Telefon ve otel adı zorunludur." });
   }
 
   const { data, error } = await supabase.from('musteriler').insert([
@@ -34,8 +33,7 @@ export default async function handler(req, res) {
       fiyat,
       durum,
       not,
-      bilgi_durumu,
-      fiyat_durumu
+      updated_by
     }
   ]);
 
